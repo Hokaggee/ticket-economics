@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#111c2e">
-  <meta name="description" content="Интерактивный калькулятор окупаемости собственной билетной платформы для клуба и рынка Благовещенска.">
+  <meta name="description" content="Калькулятор окупаемости сайта продажи билетов одного клуба. Экономия на комиссии, расходы и срок возврата вложений.">
   <title>Ticket Economics — калькулятор окупаемости</title>
   <style>
     :root{--bg:#f5f7f8;--paper:#fff;--text:#142238;--muted:#708093;--line:#e2e8ee;--navy:#101c30;--navy2:#1a2b43;--lime:#c6fa76;--green:#15865c;--rose:#ca405b;--softgreen:#e9f6ef;--shadow:0 14px 45px rgba(19,38,59,.065);--radius:20px}
@@ -41,11 +41,6 @@
     .hero-figure{font-size:38px;font-weight:830;letter-spacing:-.06em;line-height:1.13;margin:7px 0}
     .hero-mini-foot{color:#b9d2c7;font-size:12px;line-height:1.5}
     .main{padding-top:30px;padding-bottom:55px}
-    .modebar{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:23px;flex-wrap:wrap}
-    .tabs{display:flex;gap:5px;padding:5px;border:1px solid var(--line);border-radius:14px;background:#eaf0f2;max-width:100%;overflow-x:auto}
-    .tab{border:0;background:none;border-radius:10px;color:#687b8c;padding:11px 18px;font-weight:750;white-space:nowrap}
-    .tab.active{background:white;color:#17283b;box-shadow:0 3px 13px rgba(24,46,64,.09)}
-    .tab-note{font-size:12px;color:var(--muted);max-width:440px;line-height:1.45}
     .layout{display:grid;grid-template-columns:minmax(0,.99fr) minmax(420px,.92fr);align-items:start;gap:24px}
     .input-column{display:grid;gap:20px}
     .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
@@ -68,25 +63,7 @@
     .field-desc{font-size:12px;line-height:1.5;color:#617383;margin:8px 0 0}
     .field-example{font-size:12px;line-height:1.5;color:#365345;margin:8px 0 0}
     .field-example:empty{display:none}
-    .city-reset{margin-bottom:16px}
     .pair-1{grid-column:span 1}
-    .worked{margin-top:21px;border:1px solid #d3e5d8;border-radius:15px;background:#f6fbf6;padding:17px}
-    .worked h3{font-size:16px;letter-spacing:-.025em;margin:0 0 5px}
-    .worked-intro{font-size:12px;color:#657b73;line-height:1.55;margin:0 0 14px}
-    .worked-row{display:grid;grid-template-columns:28px minmax(0,1fr) auto;align-items:start;gap:10px;padding:10px 0;border-top:1px solid #e0ece3}
-    .worked-number{display:grid;place-items:center;font-size:11px;font-weight:850;width:24px;height:24px;border-radius:8px;color:#287451;background:#e1f0e4}
-    .worked-title{font-weight:750;font-size:12px;line-height:1.4}
-    .worked-math{font-size:11px;color:#6e8178;line-height:1.5;margin-top:3px}
-    .worked-value{font-size:13px;white-space:nowrap;min-width:100px;font-weight:830;text-align:right;font-variant-numeric:tabular-nums}
-    .worked-total{margin-top:12px;border-radius:11px;background:#143426;color:#fff;padding:13px 15px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .worked-total small{display:block;color:#c9ddce;font-size:11px}
-    .worked-total strong{font-size:21px;letter-spacing:-.035em;white-space:nowrap}
-    .worked-bottom{font-size:11px;color:#63766b;line-height:1.6;margin:10px 0 0}
-    .worked-bottom b{color:#233d31}
-    .method-card{border:1px solid #cbddec;background:#f0f6fc;border-radius:12px;margin:0 0 17px;padding:13px 15px;font-size:12px;line-height:1.6;color:#25415b}
-    .method-card b{font-size:13px}
-    .method-card ul{margin:5px 0 0;padding-left:18px}
-    .method-card li+li{margin-top:3px}
     .detail-row{display:flex;justify-content:space-between;gap:15px;padding:10px 0;border-bottom:1px solid #edf1f4;font-size:13px}
     .detail-row:last-child{border:0;padding-bottom:0}
     .detail-row span:first-child{color:#607184}
@@ -117,17 +94,6 @@
     .legend span{display:flex;align-items:center;gap:6px}
     .legend b{display:inline-block;width:8px;height:8px;border-radius:50%;background:#40a06c}
     .legend span:nth-child(2) b{background:#a0adba}
-    .comparison{margin-top:25px}
-    .comparison-title{display:flex;justify-content:space-between;align-items:center;gap:20px;margin:0 0 15px}
-    .comparison-title h2{font-size:20px;letter-spacing:-.035em;margin:0}
-    .comparison-title p{color:var(--muted);font-size:12px;margin:0}
-    .scenarios{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
-    .scenario{background:white;border:1px solid var(--line);border-radius:16px;padding:20px;transition:border-color .2s}
-    .scenario.selected{border-color:#77b785;box-shadow:0 0 0 2px rgba(59,137,91,.08)}
-    .scenario .s-label{font-size:12px;font-weight:820}
-    .scenario .s-money{font-size:25px;letter-spacing:-.045em;font-weight:850;margin:12px 0 2px;line-height:1.3}
-    .scenario .s-time{font-size:12px;color:#6b7d8c}
-    .scenario .s-note{font-size:11px;color:#8c9ba6;margin-top:13px;border-top:1px solid #ebeff2;padding-top:10px}
     .foot{margin-top:24px;background:#eaf0f1;border-radius:15px;padding:18px 22px;color:#687b86;font-size:12px;line-height:1.75}
     .footer{display:flex;justify-content:space-between;gap:20px;align-items:center;color:#9aabb2;font-size:11px;padding:18px 0 30px}
     .hide{display:none!important}
@@ -135,10 +101,10 @@
     .toast.show{opacity:1;transform:translate(-50%,0)}
     .mini-info{display:inline-flex;align-items:center;gap:5px;font-size:10px;color:#8b9aa4;background:#f1f4f5;border-radius:7px;padding:3px 7px}
     @media(max-width:1050px){.layout{grid-template-columns:1fr}.results{position:static}.hero-grid{grid-template-columns:1fr 300px;gap:25px}.wrap{padding-left:22px;padding-right:22px}}
-    @media(max-width:710px){.wrap{padding-left:16px;padding-right:16px}.hero{padding:33px 0}.hero-grid{grid-template-columns:1fr;gap:24px}.hero-highlight{max-width:420px}.topbar-inner{height:auto;min-height:66px;padding-top:11px;padding-bottom:11px;flex-wrap:wrap}.brand{font-size:17px}.top-actions .btn{padding:9px 10px;font-size:11px}.btn .btn-long{display:none}.tab{padding:10px 13px;font-size:12px}.modebar{display:block}.tab-note{margin:12px 0 0}.group-grid{grid-template-columns:1fr 1fr;gap:9px}.card-inner{padding:16px}.field{padding:11px}.field-label{font-size:11px;min-height:48px}.field-input input[type="number"]{font-size:16px}.metric-grid,.result-grid{gap:9px}.metric{padding:13px}.metric .value{font-size:18px}.results-head{padding:20px}.scenarios{grid-template-columns:1fr}.comparison-title{display:block}.comparison-title p{margin-top:5px}.footer{display:block}.footer div+div{margin-top:5px}}
-    @media(max-width:530px){.group-grid{grid-template-columns:1fr}.field-label{font-size:13px;min-height:unset}.worked-row{grid-template-columns:26px minmax(0,1fr)}.worked-value{grid-column:2;text-align:left;margin-top:-2px}}
+    @media(max-width:710px){.wrap{padding-left:16px;padding-right:16px}.hero{padding:33px 0}.hero-grid{grid-template-columns:1fr;gap:24px}.hero-highlight{max-width:420px}.topbar-inner{height:auto;min-height:66px;padding-top:11px;padding-bottom:11px;flex-wrap:wrap}.brand{font-size:17px}.top-actions .btn{padding:9px 10px;font-size:11px}.btn .btn-long{display:none}.group-grid{grid-template-columns:1fr 1fr;gap:9px}.card-inner{padding:16px}.field{padding:11px}.field-label{font-size:11px;min-height:48px}.field-input input[type="number"]{font-size:16px}.metric-grid,.result-grid{gap:9px}.metric{padding:13px}.metric .value{font-size:18px}.results-head{padding:20px}.footer{display:block}.footer div+div{margin-top:5px}}
+    @media(max-width:530px){.group-grid{grid-template-columns:1fr}.field-label{font-size:13px;min-height:unset}}
     @media(max-width:375px){.group-grid{grid-template-columns:1fr}.field-label{min-height:unset}}
-    @media print{body{background:white}.topbar .top-actions,.tabs,.tab-note,.btn,.footer,.range-wrap,.toast{display:none!important}.hero{padding:22px 0;-webkit-print-color-adjust:exact;print-color-adjust:exact}.main{padding-top:15px}.layout{grid-template-columns:1fr 1fr;gap:13px}.card-inner{padding:12px}.field{padding:8px}.field-label{min-height:auto}.field-input{margin:7px 0 0;height:30px}.field-input input[type=number]{font-size:14px}.results{position:static;gap:11px}.results-head{-webkit-print-color-adjust:exact;print-color-adjust:exact}.metric-grid{gap:5px}.metric{padding:9px}.scenarios{gap:8px}.scenario{padding:12px}.comparison{break-before:page}.foot{break-before:auto}}
+    @media print{body{background:white}.topbar .top-actions,.btn,.footer,.range-wrap,.toast{display:none!important}.hero{padding:22px 0;-webkit-print-color-adjust:exact;print-color-adjust:exact}.main{padding-top:15px}.layout{grid-template-columns:1fr 1fr;gap:13px}.card-inner{padding:12px}.field{padding:8px}.field-label{min-height:auto}.field-input{margin:7px 0 0;height:30px}.field-input input[type=number]{font-size:14px}.results{position:static;gap:11px}.results-head{-webkit-print-color-adjust:exact;print-color-adjust:exact}.metric-grid{gap:5px}.metric{padding:9px}.foot{break-before:auto}}
   </style>
 </head>
 <body>
@@ -154,9 +120,9 @@
   <section class="hero" id="top">
     <div class="wrap hero-grid">
       <div>
-        <div class="eyebrow">Финансовая модель билетной платформы</div>
-        <h1>Сколько принесёт <span class="pop">своя билетная система?</span></h1>
-        <p class="hero-copy">Посчитайте, сколько клуб сэкономит на продаже билетов через свой сайт и сколько можно заработать на билетах других организаторов Благовещенска. Меняйте цифры ползунком <b>или вводите их вручную.</b></p>
+        <div class="eyebrow">Расчёт для одного клуба</div>
+        <h1>Сколько принесёт <span class="pop">сайт вашего клуба?</span></h1>
+        <p class="hero-copy">Посчитайте, сколько ваш клуб сэкономит на продаже билетов через свой сайт и когда окупятся вложения. Меняйте цифры ползунком <b>или вводите их вручную.</b></p>
       </div>
       <div class="hero-highlight">
         <div class="hero-mini-label">Продажи билетов за месяц — до вычета расходов</div>
@@ -166,15 +132,6 @@
     </div>
   </section>
   <main class="wrap main">
-    <div class="modebar">
-      <div class="tabs" role="tablist" aria-label="Режим финансовой модели">
-        <button role="tab" aria-selected="true" class="tab active" data-mode="club">01 · Свой клуб</button>
-        <button role="tab" aria-selected="false" class="tab" data-mode="city">02 · Благовещенск</button>
-        <button role="tab" aria-selected="false" class="tab" data-mode="both">03 · Клуб + город</button>
-      </div>
-      <p class="tab-note" id="modeExplain">Оцениваем, сколько клуб экономит на комиссии билетного оператора после перехода на свой сервис.</p>
-    </div>
-
     <div class="layout">
       <section class="input-column" aria-label="Исходные данные">
         <div class="card" id="clubCard">
@@ -184,35 +141,16 @@
             <div class="group-grid" id="clubFields"></div>
           </div>
         </div>
-        <div class="card" id="cityCard">
-          <div class="card-inner">
-            <div class="card-title"><h2>Другие организаторы Благовещенска</h2><span class="section-number">02 / ГОРОД</span></div>
-            <div class="method-card">
-              <b>Что мы считаем?</b>
-              <ul>
-                <li>Не все концерты Благовещенска, а <b>только те мероприятия, билеты на которые продаются через вашу систему.</b></li>
-                <li>Вы получаете <b>процент комиссии</b> от продаж, а не весь билетный оборот.</li>
-                <li>Из вашей комиссии вычитаются оплата банку за платежи, расходы на билеты, сумма на налоги и обслуживание сайта.</li>
-              </ul>
-            </div>
-            <p class="card-sub">Впишите <b>количество реально планируемых партнёров</b>, среднее число их концертов и билетов. Ниже сразу появится подробный расчёт. Значения по умолчанию — только пример, не официальная статистика города.</p>
-            <p class="card-sub">Калькулятор помнит введённые ранее цифры. Кнопка ниже вернёт пример: 4 организатора, по 2 концерта, по 300 билетов за 2 500 ₽, комиссия 4% и расходы из примера.</p>
-            <button class="btn city-reset" id="cityResetBtn" type="button">Вернуть пример расчёта</button>
-            <div class="method-card" id="citySummary" aria-live="polite"></div>
-            <div class="group-grid" id="cityFields"></div>
-            <div class="worked" id="cityWalkthrough" aria-live="polite"></div>
-          </div>
-        </div>
         <div class="card" id="costCard">
           <div class="card-inner">
-            <div class="card-title"><h2>Разработка и обслуживание</h2><span class="section-number">03 / ЗАТРАТЫ</span></div>
-            <p class="card-sub">Стоимость создания платформы — 3 000 000 ₽. Инфраструктура, поддержка и продвижение — ежемесячные расходы.</p>
+            <div class="card-title"><h2>Разработка и обслуживание</h2><span class="section-number">02 / ЗАТРАТЫ</span></div>
+            <p class="card-sub">Стоимость создания сайта — 3 000 000 ₽. Обслуживание сайта оплачивается ежемесячно.</p>
             <div class="group-grid" id="costFields"></div>
           </div>
         </div>
         <div class="alert amber">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3 10 18H2L12 3Z"/><path d="M12 9v4m0 4h.01"/></svg>
-          <div><b>Важно о комиссиях:</b> экономия клуба есть лишь в той части, которую он реально платит оператору. Если всю комиссию платят зрители сверх цены билета, перенос продаж на свой сайт не даёт такой же экономии. В городском расчёте комиссия вашей платформы считается с оборота проданных билетов.</div>
+          <div><b>Важно о комиссиях:</b> экономия клуба есть лишь в той части, которую он реально платит оператору. Если всю комиссию платят зрители сверх цены билета, перенос продаж на свой сайт не даёт такой же экономии.</div>
         </div>
       </section>
 
@@ -223,14 +161,14 @@
           <div class="result-descr" id="mainKpiSub">После комиссии банка и расходов на сайт</div>
           <div class="result-grid">
             <div class="result-tile"><small>Срок окупаемости</small><strong id="payback">100 мес.</strong></div>
-            <div class="result-tile"><small>Экономия / прибыль за год</small><strong id="yearly">360 000 ₽</strong></div>
+            <div class="result-tile"><small>Экономия за год</small><strong id="yearly">360 000 ₽</strong></div>
           </div>
         </div>
         <div class="metric-grid">
           <div class="metric"><div class="label">Продажи билетов за месяц</div><div class="value" id="turnover">1,5 млн ₽</div><div class="hint" id="turnoverHint">До вычета расходов</div></div>
           <div class="metric"><div class="label">Первоначальные вложения</div><div class="value" id="investment">3 млн ₽</div><div class="hint">Разработка и запуск</div></div>
-          <div class="metric"><div class="label">Экономия / доход до расходов</div><div class="value" id="grossBenefit">75 000 ₽</div><div class="hint" id="grossHint">Комиссия, которую клуб больше не платит сервису</div></div>
-          <div class="metric"><div class="label">Расходы на работу сайта за месяц</div><div class="value" id="expenses">45 000 ₽</div><div class="hint">Комиссия банка, обслуживание и другие расходы</div></div>
+          <div class="metric"><div class="label">Экономия до расходов</div><div class="value" id="grossBenefit">75 000 ₽</div><div class="hint" id="grossHint">Комиссия, которую клуб больше не платит сервису</div></div>
+          <div class="metric"><div class="label">Расходы на работу сайта за месяц</div><div class="value" id="expenses">45 000 ₽</div><div class="hint">Комиссия банка и обслуживание сайта</div></div>
         </div>
         <div class="card">
           <div class="card-inner">
@@ -244,25 +182,21 @@
           <div class="card-inner">
             <div class="card-title"><h2>Из чего складывается результат</h2></div>
             <div id="breakdown"></div>
-            <div class="alert amber" style="margin-top:15px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3 10 18H2L12 3Z"/><path d="M12 9v4m0 4h.01"/></svg><div>Расчёт не включает НДС и прочие налоги бизнеса, кроме отдельного резерва на налог с городской комиссии; возможные требования по 54-ФЗ, 152-ФЗ, возвратам и юридической схеме расчётов нужно проверить до запуска.</div></div>
+            <div class="alert amber" style="margin-top:15px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3 10 18H2L12 3Z"/><path d="M12 9v4m0 4h.01"/></svg><div>Расчёт показывает экономию на продаже билетов. Налоги бизнеса, возвраты и дополнительные расходы в него не включены.</div></div>
           </div>
         </div>
         <button class="btn" id="downloadBtn" style="width:100%;padding:13px"><svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4"/></svg>Скачать расчёт CSV</button>
       </aside>
     </div>
 
-    <section class="comparison" id="comparison">
-      <div class="comparison-title"><h2>Три стратегии на одних вводных</h2><p>Сравнение автоматически обновляется после каждого изменения.</p></div>
-      <div class="scenarios" id="scenarioCards"></div>
-    </section>
-    <div class="foot"><b>Методика:</b> в своём клубе считаем экономию от отказа от той части комиссии оператора, которую действительно оплачивал клуб, минус эквайринг; в городе считаем реальные <i>предполагаемые</i> продажи подключённых партнёров, а не долю абстрактного рынка: число партнёров × концерты × билеты × цену. Из комиссионной выручки вычитаем эквайринг, переменные расходы и резерв на налоги. В городском и комбинированном режимах учитываются дополнительные вложения в запуск на рынке. Все показатели города — <b>настраиваемые сценарные допущения, не подтверждённый прогноз спроса</b>. Расчёт окупаемости простой, без дисконтирования, без учёта сезонности и привлечённых через агрегаторы покупателей. Модель предназначена для предварительной сметы и обсуждения с руководством.</div>
+    <div class="foot"><b>Как считаем:</b> количество концертов × проданные билеты × цену билета — это продажи клуба за месяц. Для билетов, которые перейдут на свой сайт, считаем комиссию прежнего сервиса, которую оплачивал клуб. Из сэкономленной комиссии вычитаем оплату банку и обслуживание сайта. Стоимость создания сайта — <b>3 000 000 ₽</b>. Срок окупаемости — эта сумма, делённая на месячную экономию. Если экономия нулевая или отрицательная, сайт при таких вводных не окупается. Расчёт предполагает одинаковые продажи каждый месяц и не учитывает сезонность.</div>
     <footer class="footer"><div>Ticket Economics · Конфиденциальный финансовый сценарий · Автономная HTML-страница</div><div>Все данные сохраняются только в вашем браузере.</div></footer>
   </main>
   <div class="toast" id="toast" role="status"></div>
   <script>
     'use strict';
     const FIXED_BUILD_COST=3000000;
-    const defaults={shows:2,guests:300,ticketPrice:2500,ownShare:100,operatorFee:5,feeBurden:100,clubAcquiring:2,organizers:4,eventsPerOrganizer:2,cityGuests:300,cityPrice:2500,platformFee:4,cityAcquiring:2,perTicket:5,feeTax:6,monthlyFixed:15000,cityBuild:500000,cityFixed:40000};
+    const defaults={shows:2,guests:300,ticketPrice:2500,ownShare:100,operatorFee:5,feeBurden:100,clubAcquiring:2,monthlyFixed:15000};
     const groups={
       club:[
         ['shows','Сколько концертов в месяц','шт.',0,12,1,'Среднее число концертов вашего клуба за месяц'],
@@ -273,23 +207,10 @@
         ['feeBurden','Какую часть комиссии оплачивает клуб','%',0,100,5,'100% — клуб оплачивает всю комиссию сервиса; 0% — её целиком доплачивает зритель; 50% — клуб и зритель платят поровну.'],
         ['clubAcquiring','Комиссия банка на нашем сайте','%',0,6,.1,'Когда зритель оплачивает билет картой на нашем сайте, банк удерживает этот процент. Считаем только билеты, проданные через наш сайт.']
       ],
-      city:[
-        ['organizers','Сколько организаторов продают через нас','шт.',0,40,1,'Только те партнёры, которые будут продавать билеты через ваш сайт. Не все организаторы города.'],
-        ['eventsPerOrganizer','Концертов у одного организатора в месяц','шт.',0,8,.5,'Например, 2 концерта у каждого. Можно указать среднее: 1,5 — это 3 концерта за 2 месяца.'],
-        ['cityGuests','Билетов на один концерт','шт.',0,1000,25,'Среднее число реально проданных билетов'],
-        ['cityPrice','Цена одного билета','₽',0,10000,250,'Средняя цена билета у партнёров без комиссии, которую зритель доплачивает отдельно'],
-        ['platformFee','Сколько мы берём с продажи билета','%',0,15,.5,'Ваша комиссия за продажу билетов других организаторов. Из неё ещё нужно оплатить банк и расходы сайта.'],
-        ['cityAcquiring','Комиссия банка за оплату билета','%',0,6,.1,'Банк берёт процент от полной цены билета. В этой модели его оплачивает наш сайт из своей комиссии.'],
-        ['perTicket','Дополнительные расходы на билет','₽',0,100,1,'Чеки, уведомления, сервисы и другие затраты на каждый билет'],
-        ['feeTax','Сколько откладываем на налоги','%',0,20,1,'Процент только от нашей комиссии. Это приблизительная сумма для модели; фактические налоги могут отличаться.']
-      ],
       costs:[
-        ['monthlyFixed','Обслуживание сайта в месяц','₽/мес.',0,120000,1000,'Сервер, безопасность, онлайн-касса и техническая поддержка'],
-        ['cityBuild','Доработки для других организаторов','₽',0,3000000,50000,'Доплата один раз сверх стоимости создания сайта. Если доработки уже включены в цену — укажите 0 ₽.'],
-        ['cityFixed','Работа с организаторами в месяц','₽/мес.',0,200000,5000,'Реклама, менеджер и помощь партнёрам. Эти расходы добавляются к обслуживанию самого сайта.']
+        ['monthlyFixed','Обслуживание сайта в месяц','₽/мес.',0,120000,1000,'Сервер, безопасность, онлайн-касса и техническая поддержка']
       ]
     };
-    let mode='club';
     const state={...defaults};
     const qs=(selector)=>document.querySelector(selector);
     const qa=(selector)=>Array.from(document.querySelectorAll(selector));
@@ -299,22 +220,12 @@
     const full=(n)=>money.format(Math.round(n))+' ₽';
     const shortMoney=(n)=>{const a=Math.abs(n);if(a>=1000000)return decimal.format(n/1000000)+' млн ₽';if(a>=1000)return decimal.format(n/1000)+' тыс. ₽';return full(n)};
     const round=(n)=>Math.round(n*100)/100;
-    const pct=(n)=>Number(n).toLocaleString('ru-RU',{maximumFractionDigits:2})+'%';
     const num=(n)=>money.format(Math.round(n));
-    const word=(n,forms)=>{if(!Number.isInteger(n))return forms[2];const a=Math.abs(n)%100,b=a%10;return a>10&&a<20?forms[2]:b===1?forms[0]:b>=2&&b<=4?forms[1]:forms[2]};
     const el=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e};
     const stored=(()=>{try{
-      const latest=localStorage.getItem('ticket-economics-v3');
-      if(latest)return JSON.parse(latest);
-      const old=JSON.parse(localStorage.getItem('ticket-economics-v2')||'{}');
-      // В старой версии «organizers» означало потенциальный рынок; теперь это число подключённых партнёров.
-      // Конвертируем по старой доле рынка, остальные вводные пользователя сохраняем.
-      if(typeof old.organizers==='number')old.organizers=Math.round(old.organizers*(Number(old.cityCoverage)||0)/100);
-      delete old.cityCoverage;
-      return old;
+      return JSON.parse(localStorage.getItem('ticket-economics-club-v1')||localStorage.getItem('ticket-economics-v3')||localStorage.getItem('ticket-economics-v2')||'{}')||{};
     }catch{return {}}})();
     Object.keys(defaults).forEach(k=>{if(Number.isFinite(Number(stored[k]))&&stored[k]!==null&&stored[k]!==''&&Number(stored[k])>=0)state[k]=Number(stored[k])});
-    if(['club','city','both'].includes(stored.mode))mode=stored.mode;
     function renderInputs(){
       Object.entries(groups).forEach(([group,rows])=>{
         const where=qs('#'+(group==='costs'?'costFields':group+'Fields'));
@@ -339,7 +250,7 @@
       });
     }
     function updateRange(key){const r=qs('input[type=range][data-key="'+key+'"]');if(!r)return;const [,,,min,originalMax,step]=Object.values(groups).flat().find(x=>x[0]===key);r.max=String(Math.max(originalMax,Math.ceil(state[key]/step)*step));r.value=String(state[key]);}
-    function save(){try{localStorage.setItem('ticket-economics-v3',JSON.stringify({...state,mode}))}catch{}}
+    function save(){try{localStorage.setItem('ticket-economics-club-v1',JSON.stringify(state))}catch{}}
     function updateFieldExamples(){
       const s=state,tickets=s.shows*s.guests,serviceFee=s.ticketPrice*s.operatorFee/100;
       const examples={
@@ -347,71 +258,16 @@
         operatorFee:`С билета за ${preciseMoney(s.ticketPrice)} сервис получает ${preciseMoney(serviceFee)} комиссии.`,
         feeBurden:`Из комиссии ${preciseMoney(serviceFee)} клуб оплачивает ${preciseMoney(serviceFee*s.feeBurden/100)}, зритель — ${preciseMoney(serviceFee*(1-s.feeBurden/100))}.`,
         clubAcquiring:`С билета за ${preciseMoney(s.ticketPrice)} банк удержит ${preciseMoney(s.ticketPrice*s.clubAcquiring/100)}.`,
-        platformFee:`С билета за ${preciseMoney(s.cityPrice)} нам поступает ${preciseMoney(s.cityPrice*s.platformFee/100)} до расходов.`,
-        cityAcquiring:`С билета за ${preciseMoney(s.cityPrice)} банку уходит ${preciseMoney(s.cityPrice*s.cityAcquiring/100)}.`,
-        feeTax:`С нашей комиссии ${preciseMoney(s.cityPrice*s.platformFee/100)} откладываем ${preciseMoney(s.cityPrice*s.platformFee/100*s.feeTax/100)} с каждого билета.`
       };
       Object.entries(examples).forEach(([key,text])=>setText('example-'+key,text));
     }
     function calculate(){
-      const s=state;
-      const clubVolume=s.shows*s.guests*s.ticketPrice;
-      const ownClubVolume=clubVolume*s.ownShare/100;
-      const currentClubCost=clubVolume*s.operatorFee/100*s.feeBurden/100;
-      const remainingOldCost=(clubVolume-ownClubVolume)*s.operatorFee/100*s.feeBurden/100;
-      const ownClubCost=ownClubVolume*s.clubAcquiring/100;
-      const clubContribution=currentClubCost-remainingOldCost-ownClubCost;
-      const totalCityEvents=s.organizers*s.eventsPerOrganizer;
-      const soldCityEvents=totalCityEvents;
-      const cityTickets=soldCityEvents*s.cityGuests;
-      const cityVolume=cityTickets*s.cityPrice;
-      const cityRevenue=cityVolume*s.platformFee/100;
-      const cityAcquiringCost=cityVolume*s.cityAcquiring/100;
-      const ticketCost=cityTickets*s.perTicket;
-      const feeTaxCost=cityRevenue*s.feeTax/100;
-      const cityContribution=cityRevenue-cityAcquiringCost-ticketCost-feeTaxCost;
-      const scenarios={
-        club:{turnover:clubVolume,investment:FIXED_BUILD_COST,gross:currentClubCost-remainingOldCost,variable:ownClubCost,fixed:s.monthlyFixed,monthly:clubContribution-s.monthlyFixed,clubVolume,cityVolume:0},
-        city:{turnover:cityVolume,investment:FIXED_BUILD_COST+s.cityBuild,gross:cityRevenue,variable:cityAcquiringCost+ticketCost+feeTaxCost,fixed:s.monthlyFixed+s.cityFixed,monthly:cityContribution-s.monthlyFixed-s.cityFixed,clubVolume:0,cityVolume},
-        both:{turnover:clubVolume+cityVolume,investment:FIXED_BUILD_COST+s.cityBuild,gross:currentClubCost-remainingOldCost+cityRevenue,variable:ownClubCost+cityAcquiringCost+ticketCost+feeTaxCost,fixed:s.monthlyFixed+s.cityFixed,monthly:clubContribution+cityContribution-s.monthlyFixed-s.cityFixed,clubVolume,cityVolume}
-      };
-      for(const x of Object.values(scenarios))x.payback=x.monthly>0?Math.ceil(x.investment/x.monthly):Infinity;
-      return {scenarios,clubVolume,ownClubVolume,currentClubCost,remainingOldCost,ownClubCost,clubContribution,totalCityEvents,soldCityEvents,cityTickets,cityVolume,cityRevenue,cityAcquiringCost,ticketCost,feeTaxCost,cityContribution};
-    }
-    function renderCityWalkthrough(m){
-      const s=state,root=qs('#cityWalkthrough');root.replaceChildren();
-      const summary=qs('#citySummary'),expenses=m.scenarios.city.variable+m.scenarios.city.fixed;
-      summary.replaceChildren(el('b','','Почему получается такая сумма?'));
-      summary.append(el('p','',`${decimal.format(m.soldCityEvents)} концерта × ${num(s.cityGuests)} билетов × ${full(s.cityPrice)} = ${full(m.cityVolume)} продаж за месяц.`),el('p','',`Наша комиссия: ${full(m.cityRevenue)}. Из неё вычитаем ${full(expenses)}: банк ${full(m.cityAcquiringCost)}, расходы на билеты ${full(m.ticketCost)}, сумма на налоги ${full(m.feeTaxCost)}, обслуживание сайта и работа с партнёрами ${full(s.monthlyFixed+s.cityFixed)}.`),el('p','',`После всех расходов ${m.scenarios.city.monthly<0?'убыток':'остаётся'}: ${full(Math.abs(m.scenarios.city.monthly))} в месяц.`));
-      root.appendChild(el('h3','', 'Город: от билетов до прибыли'));
-      root.appendChild(el('p','worked-intro','Расчёт за один средний месяц. Здесь только чужие мероприятия, без вашего клуба.'));
-      const steps=[
-        ['01','Концертов у партнёров',`${num(s.organizers)} ${word(s.organizers,['организатор','организатора','организаторов'])} × ${decimal.format(s.eventsPerOrganizer)} ${word(s.eventsPerOrganizer,['концерт','концерта','концертов'])}`,`${decimal.format(m.soldCityEvents)} шт.`],
-        ['02','Продано билетов',`${decimal.format(m.soldCityEvents)} ${word(m.soldCityEvents,['концерт','концерта','концертов'])} × ${num(s.cityGuests)} билетов`,`${num(m.cityTickets)} шт.`],
-        ['03','Общий оборот билетов',`${num(m.cityTickets)} билетов × ${full(s.cityPrice)}`,full(m.cityVolume)],
-        ['04','Ваш доход от комиссии',`${full(m.cityVolume)} × ${pct(s.platformFee)} — только эта часть ваш доход`,full(m.cityRevenue)],
-        ['05','Комиссия банка за оплату билетов',`${full(m.cityVolume)} × ${pct(s.cityAcquiring)}`,'−'+full(m.cityAcquiringCost)],
-        ['06','Затраты на каждый билет',`${num(m.cityTickets)} × ${full(s.perTicket)}`,'−'+full(m.ticketCost)],
-        ['07','Откладываем на налоги',`${full(m.cityRevenue)} × ${pct(s.feeTax)}`,'−'+full(m.feeTaxCost)],
-        ['08','Содержание системы и партнёров',`${full(s.monthlyFixed)} поддержка + ${full(s.cityFixed)} менеджмент`,'−'+full(s.monthlyFixed+s.cityFixed)]
-      ];
-      steps.forEach(([index,title,formula,result])=>{
-        const row=el('div','worked-row');
-        const content=el('div','');content.appendChild(el('div','worked-title',title));content.appendChild(el('div','worked-math',formula));
-        row.append(el('div','worked-number',index),content,el('div','worked-value',result));root.appendChild(row);
-      });
-      const perTicketIncome=s.cityPrice*s.platformFee/100;
-      const perTicketBank=s.cityPrice*s.cityAcquiring/100;
-      const perTicketTax=perTicketIncome*s.feeTax/100;
-      const perTicketMargin=perTicketIncome-perTicketBank-s.perTicket-perTicketTax;
-      const precise=v=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(v)+' ₽';
-      root.appendChild(el('p','worked-bottom',`В расчёте на 1 билет: ${precise(perTicketIncome)} ваша комиссия − ${precise(perTicketBank)} банк − ${precise(s.perTicket)} дополнительные затраты − ${precise(perTicketTax)} налоговый резерв = ${precise(perTicketMargin)} до постоянных расходов.`));
-      const total=el('div','worked-total');
-      const left=el('div');left.appendChild(el('small','', 'Остаётся платформе за месяц'));left.appendChild(el('div','', 'После всех текущих расходов'));
-      total.append(left,el('strong','',full(m.scenarios.city.monthly)));root.appendChild(total);
-      const initial=m.scenarios.city.investment;
-      root.appendChild(el('p','worked-bottom',`Разовые вложения: ${full(FIXED_BUILD_COST)} за систему + ${full(s.cityBuild)} на город = ${full(initial)}. Окупаемость только городского направления: ${payback(m.scenarios.city.payback)} Это сценарий по вашим вводным, а не подтверждённый объём рынка.`));
-      root.appendChild(el('p','worked-bottom', 'Важно: весь оборот билетов принадлежит организаторам, за исключением вашей комиссии. Если банк удерживает больше, чем ваша комиссия, такая схема может оказаться убыточной. При переключении на «Клуб + город» общие расходы на поддержку учитываются один раз.'));
+      const s=state,turnover=s.shows*s.guests*s.ticketPrice;
+      const ownClubVolume=turnover*s.ownShare/100;
+      const gross=ownClubVolume*s.operatorFee/100*s.feeBurden/100;
+      const variable=ownClubVolume*s.clubAcquiring/100,fixed=s.monthlyFixed;
+      const monthly=gross-variable-fixed;
+      return {turnover,ownClubVolume,gross,variable,fixed,monthly,investment:FIXED_BUILD_COST,payback:monthly>0?Math.ceil(FIXED_BUILD_COST/monthly):Infinity};
     }
     function payback(m){return Number.isFinite(m)?(m+' мес.'): 'Не окупается'}
     function setText(id,value){qs('#'+id).textContent=value}
@@ -433,48 +289,29 @@
       svg+='</svg>';host.innerHTML=svg;
       setText('chartInfo',Number.isFinite(paybackMonths)?`Точка окупаемости: ${paybackMonths} мес. Расчёт на постоянном среднем объёме продаж.`:'На выбранном уровне продаж положительной окупаемости нет: ежемесячная выгода не покрывает содержание системы.');
     }
-    function renderScenarios(data){const root=qs('#scenarioCards');root.replaceChildren();[['club','Только свой клуб','Экономия на комиссии текущего оператора'],['city','Только организаторы города','Комиссионный доход от сторонних мероприятий'],['both','Клуб + Благовещенск','Экономия клуба плюс доход от партнёров']].forEach(([key,label,note])=>{
-      const d=data.scenarios[key],card=el('div','scenario'+(mode===key?' selected':''));card.append(el('div','s-label',label),el('div','s-money',full(d.monthly)+' / мес.'),el('div','s-time','Окупаемость: '+payback(d.payback)),el('div','s-note',note+' · инвестиции '+shortMoney(d.investment)));root.appendChild(card)
-    })}
-    function updateVisibility(){qa('[data-mode]').forEach(b=>{b.classList.toggle('active',b.dataset.mode===mode);b.setAttribute('aria-selected',String(b.dataset.mode===mode))});qs('#clubCard').classList.toggle('hide',mode==='city');qs('#cityCard').classList.toggle('hide',mode==='club');
-      qa('#costFields .field').forEach(field=>{const key=field.querySelector('input[type=number]').dataset.key;field.classList.toggle('hide',mode==='club'&&['cityBuild','cityFixed'].includes(key))});
-      setText('modeExplain',mode==='club'?'Считаем экономию на комиссии оператора с билетов, переведённых на собственный сайт.':mode==='city'?'Считаем только продажи подключённых партнёров, а не весь рынок города. Ваша выручка — комиссия, не оборот билетов.':'Складываем экономию клуба и результат подключённых городских мероприятий; базовое обслуживание учитывается один раз.');
-      setText('mainKpiLabel',mode==='club'?'Чистая экономия клуба в месяц':mode==='city'?'Прибыль билетной платформы в месяц':'Совокупная выгода проекта в месяц');
-      setText('mainKpiSub',mode==='club'?'После комиссии банка и обслуживания сайта':mode==='city'?'То, что остаётся от нашей комиссии после всех расходов':'Экономия клуба и прибыль от других организаторов');
-    }
     function update(){
-      const model=calculate(),d=model.scenarios[mode],s=state;
-      updateVisibility();
-      const totalShows=mode==='club'?s.shows:mode==='city'?model.soldCityEvents:s.shows+model.soldCityEvents;
+      const d=calculate(),s=state;
       setText('heroVolume',full(d.turnover));
-      setText('heroFoot',mode==='club'?`Клуб · ${num(s.shows)} концерта(ов) × ${num(s.guests)} билетов × ${full(s.ticketPrice)}`:mode==='city'?`Город · ${decimal.format(model.soldCityEvents)} события/мес. × ${num(s.cityGuests)} билетов`:`Клуб + город · примерно ${decimal.format(totalShows)} события(й) в месяц`);
+      setText('heroFoot',`Клуб · ${num(s.shows)} концерта(ов) × ${num(s.guests)} билетов × ${full(s.ticketPrice)}`);
       const kpi=qs('#mainKpi');kpi.textContent=full(d.monthly);kpi.classList.toggle('negative',d.monthly<0);
       setText('payback',payback(d.payback));setText('yearly',full(d.monthly*12));
-      setText('turnover',shortMoney(d.turnover));setText('turnoverHint',mode==='club'?'Билеты вашего клуба':mode==='city'?'Билеты сторонних событий':'Клуб и сторонние события');
-      setText('investment',shortMoney(d.investment));
-      setText('grossBenefit',shortMoney(d.gross));setText('grossHint',mode==='club'?'Комиссия, которую клуб больше не платит сервису':mode==='city'?'Наша комиссия до оплаты банка и других расходов':'Экономия клуба + наша комиссия с билетов партнёров');
+      setText('turnover',shortMoney(d.turnover));setText('turnoverHint','Билеты вашего клуба');
+      setText('investment',shortMoney(d.investment));setText('grossBenefit',shortMoney(d.gross));
       setText('expenses',shortMoney(d.variable+d.fixed));
-      const breakdown=mode==='club'?
-        [['Все продажи клуба',model.clubVolume],['Билеты на своём сайте',model.ownClubVolume],['Сэкономленная комиссия',d.gross],['Комиссия банка на нашем сайте',-model.ownClubCost],['Обслуживание сайта',-s.monthlyFixed],['Чистая экономия в месяц',d.monthly]]:
-        mode==='city'?
-        [['Организаторов на нашем сайте',num(s.organizers)],['Их концертов за месяц',decimal.format(model.soldCityEvents)],['Проданных билетов за месяц',num(model.cityTickets)],['Наша комиссия до расходов',model.cityRevenue],['Комиссия банка',-model.cityAcquiringCost],['Расходы на билеты',-model.ticketCost],['Откладываем на налоги',-model.feeTaxCost],['Обслуживание сайта',-s.monthlyFixed],['Работа с организаторами',-s.cityFixed],['Остаётся после всех расходов в месяц',d.monthly]]:
-        [['Экономия клуба после оплаты банка',model.clubContribution],['Наша комиссия с билетов партнёров',model.cityRevenue],['Комиссия банка за билеты партнёров',-model.cityAcquiringCost],['Расходы на билеты партнёров',-model.ticketCost],['Откладываем на налоги',-model.feeTaxCost],['Обслуживание сайта',-s.monthlyFixed],['Работа с организаторами',-s.cityFixed],['Совокупный результат в месяц',d.monthly]];
-      updateFieldExamples();makeBreakdown(breakdown);renderCityWalkthrough(model);drawChart(d);renderScenarios(model);save();
+      updateFieldExamples();
+      makeBreakdown([['Все продажи клуба',d.turnover],['Билеты на своём сайте',d.ownClubVolume],['Сэкономленная комиссия',d.gross],['Комиссия банка на нашем сайте',-d.variable],['Обслуживание сайта',-d.fixed],['Чистая экономия в месяц',d.monthly]]);
+      drawChart(d);save();
     }
     function csvCell(s){const val=String(s);return '"'+val.replace(/"/g,'""')+'"'}
-    function downloadCSV(){const model=calculate();const lines=[['Расчёт окупаемости билетной системы',''],['Режим',mode==='club'?'Клуб':mode==='city'?'Благовещенск':'Клуб + Благовещенск'],['Показатель','Значение']];
-      lines.push(['Создание платформы (₽)',FIXED_BUILD_COST]);
+    function downloadCSV(){const d=calculate();const lines=[['Расчёт окупаемости сайта одного клуба',''],['Показатель','Значение'],['Создание сайта (₽)',FIXED_BUILD_COST]];
       Object.values(groups).flat().forEach(row=>lines.push([row[1]+' ('+row[2]+')',state[row[0]]]));
-      for(const [key,title] of [['club','Только клуб'],['city','Только город'],['both','Клуб + город']]){const d=model.scenarios[key];lines.push(['',''],['Сценарий',title],['Оборот за месяц',round(d.turnover)],['Выгода / выручка в месяц',round(d.gross)],['Операционные расходы в месяц',round(d.variable+d.fixed)],['Чистый результат в месяц',round(d.monthly)],['Чистый результат в год',round(d.monthly*12)],['Инвестиции',round(d.investment)],['Окупаемость (месяцы)',Number.isFinite(d.payback)?d.payback:'Не окупается'])}
-      lines.push(['Примечание','Расчёт является сценарием, а не гарантией выручки. Городские числа — предположения.']);
-      const csv='\ufeff'+lines.map(x=>x.map(csvCell).join(';')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='ticket-economics-'+mode+'.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);toast('CSV-файл подготовлен');
+      lines.push(['',''],['Продажи билетов за месяц',round(d.turnover)],['Сэкономленная комиссия',round(d.gross)],['Комиссия банка и обслуживание за месяц',round(d.variable+d.fixed)],['Чистая экономия в месяц',round(d.monthly)],['Чистая экономия за год',round(d.monthly*12)],['Вложения в создание сайта',round(d.investment)],['Окупаемость (месяцы)',Number.isFinite(d.payback)?d.payback:'Не окупается'],['Примечание','Расчёт по введённым данным, а не гарантия экономии.']);
+      const csv='\ufeff'+lines.map(x=>x.map(csvCell).join(';')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='ticket-economics-club.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);toast('CSV-файл подготовлен');
     }
     let toastTimer;
     function toast(msg){const node=qs('#toast');node.textContent=msg;node.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>node.classList.remove('show'),2300)}
-    qa('[data-mode]').forEach(tab=>tab.addEventListener('click',()=>{mode=tab.dataset.mode;update()}));
-    qs('#resetBtn').addEventListener('click',()=>{Object.assign(state,defaults);mode='club';qa('input[type=number][data-key]').forEach(n=>n.value=String(state[n.dataset.key]));qa('input[type=range][data-key]').forEach(n=>updateRange(n.dataset.key));update();toast('Исходные значения восстановлены')});
+    qs('#resetBtn').addEventListener('click',()=>{Object.assign(state,defaults);qa('input[type=number][data-key]').forEach(n=>n.value=String(state[n.dataset.key]));qa('input[type=range][data-key]').forEach(n=>updateRange(n.dataset.key));update();toast('Исходные значения восстановлены')});
     qs('#printBtn').addEventListener('click',()=>window.print());qs('#downloadBtn').addEventListener('click',downloadCSV);
-    qs('#cityResetBtn').addEventListener('click',()=>{[...groups.city,...groups.costs].forEach(([key])=>{state[key]=defaults[key];qs('#field-'+key).value=String(state[key]);updateRange(key)});update();toast('Пример расчёта города восстановлен')});
     renderInputs();Object.keys(state).forEach(updateRange);update();
   </script>
 </body>
